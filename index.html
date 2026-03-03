@@ -245,20 +245,21 @@ body {
 /* ================= UBICACIÓN ================= */
 .ubicacion-section {
   text-align:center;
-  padding: 15px 20px 50px 20px;
+  padding: 15px 20px 30px 20px;
 }
 
 .divisor-img {
   width: 100%;
-  max-width: none;
+  max-width: 100%;
   height: auto;
-  margin: 0 auto 5px auto;
+  margin: 0 auto 10px auto;
   display: block;
   filter: drop-shadow(0 0 12px rgba(255,215,0,0.6));
   opacity: 0.9;
 }
 
-.ubicacion-titulo {
+.ubicacion-titulo,
+.itinerario-titulo {
   font-family:'Italiana', serif;
   font-size:3rem;
   letter-spacing:4px;
@@ -266,11 +267,60 @@ body {
   margin-bottom: 12px;
 }
 
+/* ================= ITINERARIO ================= */
+.itinerario-section {
+  text-align:center;
+  padding: 10px 20px 120px 20px;
+}
+
+.itinerario-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.itinerario-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.itinerario-icon {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.itinerario-time {
+  font-family: 'Italiana', serif;
+  font-size: 2.2rem;
+  color: gold;
+  text-shadow: 0 0 12px gold;
+}
+
+.separator-dots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c0c0c0, #808080, #c0c0c0);
+  box-shadow: 0 0 8px rgba(192,192,192,0.6);
+}
+
 .map-wrapper {
   position: relative;
   width: 90%;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 10px auto;
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
@@ -285,6 +335,59 @@ body {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/* ================= CAMPANA ================= */
+.bell-container {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin: 40px auto 40px;
+  cursor: pointer;
+}
+
+.bell-container:hover {
+  transform: scale(1.1);
+}
+
+.bell-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sound-waves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  border: 3px solid #d4af37;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  box-sizing: border-box;
+}
+
+.bell-container:hover .wave {
+  animation: ring-wave 2.2s ease-out forwards;
+}
+
+.wave:nth-child(1) { animation-delay: 0.1s; }
+.wave:nth-child(2) { animation-delay: 0.45s; }
+.wave:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes ring-wave {
+  0%   { transform: translate(-50%, -50%) scale(0.4); opacity: 0.85; }
+  50%  { opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
 }
 
 /* ================= MUSICA ================= */
@@ -334,13 +437,15 @@ body {
   #countdown h2 { font-size:2.2rem; margin-bottom:20px; }
   .countdown-container { gap:10px; }
   .ubicacion-section {
-    padding: 10px 10px 40px 10px;
+    padding: 10px 10px 20px 10px;
   }
   .divisor-img { 
-    width: 100vw; 
-    margin: 0 auto 5px auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 8px auto;
   }
-  .ubicacion-titulo { 
+  .ubicacion-titulo,
+  .itinerario-titulo { 
     font-size:2.2rem; 
     margin-bottom: 10px; 
   }
@@ -351,9 +456,34 @@ body {
   }
   .ubicacion-box .salon { font-size: 2.1rem; }
   .ubicacion-box .direccion { font-size: 0.95rem; }
-  .map-wrapper { width: 96%; padding-bottom: 70%; }
-
-  /* Elimina el salto del fondo en móviles */
+  .map-wrapper { 
+    width: 96%; 
+    padding-bottom: 70%; 
+    margin-bottom: 8px;
+  }
+  .itinerario-section {
+    padding-top: 5px;
+    padding-bottom: 80px;
+  }
+  .bell-container {
+    width: 80px;
+    height: 80px;
+    margin: 30px auto 30px;
+  }
+  .itinerario-icon {
+    width: 70px;
+    height: 70px;
+  }
+  .itinerario-time {
+    font-size: 1.8rem;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+  .itinerario-container {
+    gap: 20px;
+  }
   body {
     background-attachment: scroll !important;
   }
@@ -428,6 +558,50 @@ body {
   </div>
   <div class="map-wrapper">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1104.9572330072972!2d-55.74033298950951!3d-27.483260116431328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9457cf4336f4da2f%3A0x6433ed96a3d570da!2sClub%20UPCN!5e1!3m2!1ses!2sar!4v1772512945819!5m2!1ses!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<section class="itinerario-section">
+  <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
+  <h2 class="itinerario-titulo">Itinerario</h2>
+
+  <!-- Campana sin efectos -->
+  <div class="bell-container">
+    <img src="assets/iconos/campana.png" alt="Campana" class="bell-icon">
+    <div class="sound-waves">
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+  </div>
+
+  <!-- Itinerario detallado -->
+  <div class="itinerario-container">
+    <div class="itinerario-item">
+      <p class="itinerario-time">Convocatoria 21:00hs</p>
+    </div>
+
+    <div class="separator-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div class="itinerario-item">
+      <img src="assets/cena.png" alt="Cena" class="itinerario-icon">
+      <p class="itinerario-time">Cena 22:45hs</p>
+    </div>
+
+    <div class="separator-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div class="itinerario-item">
+      <img src="assets/vals.png" alt="Vals" class="itinerario-icon">
+      <p class="itinerario-time">Vals 00:30hs</p>
+    </div>
   </div>
 </section>
 
