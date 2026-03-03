@@ -22,6 +22,99 @@ body {
   background-attachment:fixed;
   color:white;
   overflow-x:hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ================= ANIMACIÓN SLIDE UP + FADE IN AL HACER SCROLL ================= */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estado inicial: oculto y desplazado hacia abajo */
+.hero,
+#countdown,
+.ubicacion-section,
+.itinerario-section,
+.dresscode-section,
+.confirmacion-section {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* Cuando entra en vista, se anima */
+.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Retrasos suaves */
+.hero.visible           { transition-delay: 0.1s; }
+#countdown.visible      { transition-delay: 0.2s; }
+.ubicacion-section.visible { transition-delay: 0.3s; }
+.itinerario-section.visible { transition-delay: 0.4s; }
+.dresscode-section.visible { transition-delay: 0.5s; }
+.confirmacion-section.visible { transition-delay: 0.6s; }
+
+/* Animación suave para elementos internos */
+.dresscode-box,
+.ubicacion-box,
+.confirmacion-box,
+.formfacade-wrapper,
+.evento-horizontal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+}
+
+.visible .dresscode-box,
+.visible .ubicacion-box,
+.visible .confirmacion-box,
+.visible .formfacade-wrapper,
+.visible .evento-horizontal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================= PARTÍCULAS BLANCAS SUTILES ================= */
+.particles-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  box-shadow: 0 0 8px rgba(255,255,255,0.7);
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(120vh) scale(0.4);
+    opacity: 0;
+  }
+  10% { opacity: 0.4; }
+  50% { opacity: 0.75; }
+  90% { opacity: 0.3; }
+  100% {
+    transform: translateY(-20vh) scale(0.7);
+    opacity: 0;
+  }
 }
 
 /* ================= HERO ================= */
@@ -34,6 +127,8 @@ body {
   text-align:center;
   padding-top:150px;
   padding-bottom:20px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== TITULO ===== */
@@ -64,21 +159,26 @@ body {
 /* ===== CANDELABRO ===== */
 .candelabro-centro {
   width:200px;
-  filter: drop-shadow(0 0 25px rgba(255,215,0,0.8));
+  filter: drop-shadow(0 0 25px rgba(255,215,0,0.95))
+          drop-shadow(0 0 40px rgba(255,215,0,0.6));
 }
 
 /* ================= CAJAS PREMIUM ================= */
 .fecha-box:hover,
 .hora-box:hover,
 .count-box:hover,
-.ubicacion-box:hover {
+.ubicacion-box:hover,
+.dresscode-box:hover,
+.confirmacion-box:hover {
   transform:scale(1.05);
 }
 
 .fecha-box,
 .hora-box,
 .count-box,
-.ubicacion-box {
+.ubicacion-box,
+.dresscode-box,
+.confirmacion-box {
   position:relative;
   border-radius:22px;
   border:1.5px solid rgba(255,255,255,0.8);
@@ -101,8 +201,10 @@ body {
   justify-content:center;
 }
 
-.ubicacion-box {
-  width: 340px;
+.ubicacion-box,
+.dresscode-box,
+.confirmacion-box {
+  width: 240px;
   height: auto;
   min-height: 190px;
   padding: 25px 20px;
@@ -118,7 +220,9 @@ body {
 .fecha-box::before,
 .hora-box::before,
 .count-box::before,
-.ubicacion-box::before {
+.ubicacion-box::before,
+.dresscode-box::before,
+.confirmacion-box::before {
   content:"";
   position:absolute;
   inset:0;
@@ -132,7 +236,9 @@ body {
 .fecha-box > *,
 .hora-box > *,
 .count-box > *,
-.ubicacion-box > * {
+.ubicacion-box > *,
+.dresscode-box > *,
+.confirmacion-box > * {
   position:relative;
   z-index:2;
 }
@@ -140,7 +246,9 @@ body {
 .fecha-box::after,
 .hora-box::after,
 .count-box::after,
-.ubicacion-box::after {
+.ubicacion-box::after,
+.dresscode-box::after,
+.confirmacion-box::after {
   content: "";
   position: absolute;
   top: 0;
@@ -193,8 +301,10 @@ body {
   box-shadow:0 0 12px gold;
 }
 
-/* Ubicación box */
-.ubicacion-box .salon {
+/* Textos en cajas */
+.salon,
+.dresscode-titulo,
+.confirmacion-titulo {
   font-family: 'Italiana', serif;
   font-size: 2.5rem;
   color: gold;
@@ -202,12 +312,70 @@ body {
   margin: 0;
 }
 
-.ubicacion-box .direccion {
+.direccion,
+.dresscode-texto,
+.confirmacion-texto {
   font-family: 'Poppins', sans-serif;
   font-size: 1.1rem;
   line-height: 1.4;
   opacity: 0.95;
-  margin: 0;
+  margin: 12px 0 8px;
+}
+
+.dresscode-texto strong,
+.confirmacion-texto strong {
+  color: #ffd700;
+}
+
+/* Estilo especial para el texto de dress code y regalo */
+.dresscode-texto.especial {
+  font-family: 'Italiana', serif;
+  font-size: 1.4rem;
+  color: #ffd700;
+  text-shadow: 
+    0 0 8px rgba(255, 215, 0, 0.9),
+    0 0 16px rgba(255, 215, 0, 0.6),
+    0 0 24px rgba(255, 215, 0, 0.4);
+  letter-spacing: 1px;
+  margin-top: 20px;
+  line-height: 1.2;
+}
+
+/* Imagen de dresscode con animación de pulso suave + GLOW BLANCO para el GIF */
+.dresscode-imagen {
+  width: 180px;
+  max-width: 80%;
+  height: auto;
+  margin: 15px auto 12px auto;
+  display: block;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+  animation: softPulse 6s ease-in-out infinite;
+}
+
+/* Glow blanco especial SOLO para el GIF (sobre.gif) */
+.dresscode-imagen[src$=".gif"] {
+  filter: 
+    drop-shadow(0 0 8px rgba(255,255,255,0.8))    /* glow principal blanco */
+    drop-shadow(0 0 20px rgba(255,255,255,0.5))   /* glow más amplio */
+    drop-shadow(0 0 35px rgba(255,255,255,0.3));  /* halo exterior suave */
+  animation: softPulseGlow 5s ease-in-out infinite; /* pulso más lento para el glow */
+}
+
+@keyframes softPulseGlow {
+  0%, 100% {
+    filter: 
+      drop-shadow(0 0 8px rgba(255,255,255,0.8))
+      drop-shadow(0 0 20px rgba(255,255,255,0.5))
+      drop-shadow(0 0 35px rgba(255,255,255,0.3))
+      drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+  }
+  50% {
+    filter: 
+      drop-shadow(0 0 15px rgba(255,255,255,1))
+      drop-shadow(0 0 35px rgba(255,255,255,0.7))
+      drop-shadow(0 0 50px rgba(255,255,255,0.4))
+      drop-shadow(0 0 25px rgba(255, 215, 0, 0.8));
+  }
 }
 
 /* ================= CONTADOR ================= */
@@ -242,10 +410,13 @@ body {
   font-family:'Italiana', serif;
 }
 
-/* ================= UBICACIÓN ================= */
-.ubicacion-section {
+/* ================= SECCIONES ================= */
+.ubicacion-section,
+.itinerario-section,
+.dresscode-section,
+.confirmacion-section {
   text-align:center;
-  padding: 15px 20px 30px 20px;
+  padding: 10px 20px 100px 20px;
 }
 
 .divisor-img {
@@ -258,8 +429,8 @@ body {
   opacity: 0.9;
 }
 
-.ubicacion-titulo,
-.itinerario-titulo {
+/* Clase genérica para todos los títulos de sección */
+.seccion-titulo {
   font-family:'Italiana', serif;
   font-size:3rem;
   letter-spacing:4px;
@@ -267,17 +438,81 @@ body {
   margin-bottom: 12px;
 }
 
-/* ================= ITINERARIO ================= */
-.itinerario-section {
-  text-align:center;
-  padding: 10px 20px 120px 20px;
+/* Margen extra para separar "Regalo" del bloque anterior */
+.dresscode-section h2:nth-of-type(2) {
+  margin-top: 60px;
 }
 
+/* ================= CAMPANA CON ONDAS ================= */
+.bell-container {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin: 40px auto 40px;
+  animation: bellShake 12s infinite ease-in-out;
+}
+
+.bell-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: top center;
+  filter: drop-shadow(0 0 25px rgba(255,255,255,0.95))
+          drop-shadow(0 0 45px rgba(255,255,255,0.65));
+}
+
+@keyframes bellShake {
+  0%, 32%, 100% { transform: rotate(0deg); }
+  3%   { transform: rotate(-8deg); }
+  6%   { transform: rotate(8deg); }
+  9%   { transform: rotate(-7deg); }
+  12%  { transform: rotate(7deg); }
+  15%  { transform: rotate(-6deg); }
+  18%  { transform: rotate(6deg); }
+  21%  { transform: rotate(-5deg); }
+  24%  { transform: rotate(5deg); }
+  27%  { transform: rotate(-4deg); }
+  30%  { transform: rotate(4deg); }
+  32%  { transform: rotate(0deg); }
+}
+
+.sound-waves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: ring-wave 4.8s forwards ease-out infinite;
+}
+
+.wave:nth-child(1) { animation-delay: 0.4s; }
+.wave:nth-child(2) { animation-delay: 1.0s; }
+.wave:nth-child(3) { animation-delay: 1.6s; }
+
+@keyframes ring-wave {
+  0%    { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; }
+  30%   { opacity: 0.6; }
+  65%   { opacity: 0.3; }
+  100%  { transform: translate(-50%, -50%) scale(3.0); opacity: 0; }
+}
+
+/* ================= ITINERARIO ================= */
 .itinerario-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+  gap: 35px;
   margin-top: 30px;
 }
 
@@ -285,20 +520,31 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .itinerario-icon {
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
   object-fit: contain;
+  filter: drop-shadow(0 0 25px rgba(255,255,255,0.95))
+          drop-shadow(0 0 45px rgba(255,255,255,0.65));
+}
+
+.itinerario-title {
+  font-family: 'Italiana', serif;
+  font-size: 2.4rem;
+  color: gold;
+  text-shadow: 0 0 12px gold;
+  margin: 0;
 }
 
 .itinerario-time {
   font-family: 'Italiana', serif;
-  font-size: 2.2rem;
-  color: gold;
-  text-shadow: 0 0 12px gold;
+  font-size: 1.8rem;
+  color: #ffd700;
+  text-shadow: 0 0 8px gold;
+  margin: 0;
 }
 
 .separator-dots {
@@ -337,57 +583,26 @@ body {
   border: 0;
 }
 
-/* ================= CAMPANA ================= */
-.bell-container {
-  position: relative;
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  margin: 40px auto 40px;
-  cursor: pointer;
+/* ================= FORM FACADE STYLES ================= */
+.formfacade-wrapper {
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  min-height: 600px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(186,85,211,0.3);
 }
 
-.bell-container:hover {
-  transform: scale(1.1);
+#ff-compose {
+  width: 100% !important;
+  min-height: 600px !important;
 }
 
-.bell-icon {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.sound-waves {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.wave {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  height: 60px;
-  border: 3px solid #d4af37;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  box-sizing: border-box;
-}
-
-.bell-container:hover .wave {
-  animation: ring-wave 2.2s ease-out forwards;
-}
-
-.wave:nth-child(1) { animation-delay: 0.1s; }
-.wave:nth-child(2) { animation-delay: 0.45s; }
-.wave:nth-child(3) { animation-delay: 0.8s; }
-
-@keyframes ring-wave {
-  0%   { transform: translate(-50%, -50%) scale(0.4); opacity: 0.85; }
-  50%  { opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
+#ff-compose iframe,
+#ff-compose div {
+  background: transparent !important;
 }
 
 /* ================= MUSICA ================= */
@@ -421,9 +636,7 @@ body {
   .hora-box .bottom { font-size:1.9rem; }
   .evento-horizontal { gap:15px; }
   .candelabro-centro { width:130px; }
-  .fecha-box,
-  .hora-box,
-  .count-box {
+  .fecha-box, .hora-box, .count-box {
     width:20vw;
     height:20vw;
     max-width:95px;
@@ -431,66 +644,73 @@ body {
   }
   .count-number { font-size:clamp(1.8rem, 6vw, 2.5rem); }
   .linea { height:2px; margin:4px 0; }
-  #countdown {
-    padding:15px 15px 10px 15px;
-  }
+  #countdown { padding:15px 15px 10px 15px; }
   #countdown h2 { font-size:2.2rem; margin-bottom:20px; }
   .countdown-container { gap:10px; }
-  .ubicacion-section {
-    padding: 10px 10px 20px 10px;
+  .ubicacion-section,
+  .dresscode-section,
+  .confirmacion-section {
+    padding: 10px 10px 80px 10px;
   }
-  .divisor-img { 
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto 8px auto;
-  }
-  .ubicacion-titulo,
-  .itinerario-titulo { 
+  .divisor-img { margin: 0 auto 8px auto; }
+  .seccion-titulo { 
     font-size:2.2rem; 
     margin-bottom: 10px; 
   }
-  .ubicacion-box {
-    width: 92%;
-    padding: 18px 12px;
+  .ubicacion-box,
+  .confirmacion-box {
+    width: 98%;
+    padding: 14px 12px;
     min-height: 140px;
   }
-  .ubicacion-box .salon { font-size: 2.1rem; }
-  .ubicacion-box .direccion { font-size: 0.95rem; }
-  .map-wrapper { 
-    width: 96%; 
-    padding-bottom: 70%; 
-    margin-bottom: 8px;
+
+  .dresscode-box {
+    width: 70%;
+    padding: 14px 12px;
+    min-height: 140px;
   }
-  .itinerario-section {
-    padding-top: 5px;
-    padding-bottom: 80px;
+
+  .salon,
+  .dresscode-titulo,
+  .confirmacion-titulo { font-size: 2.1rem; }
+  .direccion,
+  .dresscode-texto,
+  .confirmacion-texto { font-size: 0.95rem; }
+  .map-wrapper { width: 96%; padding-bottom: 70%; margin-bottom: 8px; }
+  .itinerario-section { padding-bottom: 80px; }
+  .bell-container { width: 80px; height: 80px; margin: 30px auto 30px; }
+  .itinerario-icon { width: 90px; height: 90px; }
+  .itinerario-title { font-size: 2rem; }
+  .itinerario-time { font-size: 1.6rem; }
+  .wave { width: 50px; height: 50px; }
+  .dot { width: 10px; height: 10px; }
+  .itinerario-container { gap: 25px; }
+  body { background-attachment: scroll !important; }
+
+  .dresscode-imagen {
+    width: 140px;
   }
-  .bell-container {
-    width: 80px;
-    height: 80px;
-    margin: 30px auto 30px;
+  .dresscode-texto.especial {
+    font-size: 1.0rem;
+    text-shadow: 
+      0 0 6px rgba(255, 215, 0, 0.9),
+      0 0 12px rgba(255, 215, 0, 0.6);
   }
-  .itinerario-icon {
-    width: 70px;
-    height: 70px;
+
+  .formfacade-wrapper {
+    padding: 15px;
+    min-height: 700px;
   }
-  .itinerario-time {
-    font-size: 1.8rem;
-  }
-  .dot {
-    width: 10px;
-    height: 10px;
-  }
-  .itinerario-container {
-    gap: 20px;
-  }
-  body {
-    background-attachment: scroll !important;
+  #ff-compose {
+    min-height: 700px !important;
   }
 }
 </style>
 </head>
 <body>
+
+<!-- Capa de partículas blancas -->
+<div class="particles-bg" id="particles"></div>
 
 <section class="hero">
   <div class="titulo-principal">
@@ -551,23 +771,22 @@ body {
 
 <section class="ubicacion-section">
   <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
-  <h2 class="ubicacion-titulo">Ubicación</h2>
+  <h2 class="seccion-titulo">Ubicación</h2>
   <div class="ubicacion-box">
     <div class="salon">Salón UPCN</div>
     <div class="direccion">General Artigas y Los Lapachos,<br>Candelaria, Misiones</div>
   </div>
   <div class="map-wrapper">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1104.9572330072972!2d-55.74033298950951!3d-27.483260116431328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9457cf4336f4da2f%3A0x6433ed96a3d570da!2sClub%20UPCN!5e1!3m2!1ses!2sar!4v1772512945819!5m2!1ses!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d884.8875443964563!2d-55.740333!3d-27.4832601!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9457cf4336f4da2f%3A0x6433ed96a3d570da!2sClub%20UPCN!5e0!3m2!1ses!2sar!4v1772540821174!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </section>
 
 <section class="itinerario-section">
   <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
-  <h2 class="itinerario-titulo">Itinerario</h2>
+  <h2 class="seccion-titulo">Itinerario</h2>
 
-  <!-- Campana sin efectos -->
   <div class="bell-container">
-    <img src="assets/campana.png" alt="Campana" class="bell-icon">
+    <img src="assets/iconos/campana.png" alt="Campana" class="bell-icon">
     <div class="sound-waves">
       <div class="wave"></div>
       <div class="wave"></div>
@@ -575,10 +794,10 @@ body {
     </div>
   </div>
 
-  <!-- Itinerario detallado -->
   <div class="itinerario-container">
     <div class="itinerario-item">
-      <p class="itinerario-time">Convocatoria 21:00hs</p>
+      <div class="itinerario-title">Convocatoria</div>
+      <div class="itinerario-time">21:00hs</div>
     </div>
 
     <div class="separator-dots">
@@ -589,7 +808,8 @@ body {
 
     <div class="itinerario-item">
       <img src="assets/cena.png" alt="Cena" class="itinerario-icon">
-      <p class="itinerario-time">Cena 22:45hs</p>
+      <div class="itinerario-title">Cena</div>
+      <div class="itinerario-time">22:45hs</div>
     </div>
 
     <div class="separator-dots">
@@ -600,8 +820,51 @@ body {
 
     <div class="itinerario-item">
       <img src="assets/vals.png" alt="Vals" class="itinerario-icon">
-      <p class="itinerario-time">Vals 00:30hs</p>
+      <div class="itinerario-title">Vals y Baile</div>
+      <div class="itinerario-time">00:30hs</div>
     </div>
+  </div>
+</section>
+
+<section class="dresscode-section">
+  <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
+  <h2 class="seccion-titulo">Dress Code</h2>
+
+  <div class="dresscode-box">
+    <img src="assets/ropa.png" alt="Vestimenta sugerida" class="dresscode-imagen">
+    <div class="dresscode-texto especial">
+      Formal Elegante
+    </div>
+  </div>
+
+  <h2 class="seccion-titulo">Regalo</h2>
+
+  <div class="dresscode-box">
+    <img src="assets/regalito.png" alt="Sobre para regalo" class="dresscode-imagen">
+    <div class="dresscode-texto especial" style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; letter-spacing: 1px;">
+      Alias: xvmalvy.mp
+    </div>
+  </div>
+</section>
+
+<section class="confirmacion-section">
+  <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
+  <h2 class="seccion-titulo">Confirmación de Asistencia</h2>
+
+  <div class="confirmacion-texto" style="margin: 0 auto 30px; max-width: 700px; font-size: 1.1rem;">
+
+
+  <!-- GIF animado con glow blanco -->
+  <img src="assets/sobre.gif" alt="Sobre para regalo animado" class="dresscode-imagen">
+
+  <div class="formfacade-wrapper">
+    <div class="container" id="ff-compose"></div>
+    <script async defer src="https://formfacade.com/include/108111736111778463586/form/1FAIpQLSedkDQOatSIySYk1g7ptzAk42wgMLcDswr5661-Sc_4j_Ge4A/bootstrap.js?div=ff-compose"></script>
+  </div>
+
+  <div class="confirmacion-texto" style="margin-top: 40px; font-size: 1rem; opacity: 0.9;">
+    ¿Algún problema con el formulario?<br>
+    Escribinos por WhatsApp al <strong>+54 9 3764 173217</strong>
   </div>
 </section>
 
@@ -612,7 +875,8 @@ body {
 <button class="music-control" id="musicBtn" onclick="toggleMusic()">▶</button>
 
 <script>
-const fechaEvento = new Date("2026-09-27T21:00:00-03:00").getTime();
+// Contador
+const fechaEvento = new Date("2026-03-21T21:00:00-03:00").getTime();
 
 function actualizarContador(){
   const ahora = new Date().getTime();
@@ -637,6 +901,7 @@ function actualizarContador(){
 setInterval(actualizarContador,1000);
 actualizarContador();
 
+// Música
 const audio = document.getElementById("music");
 
 function toggleMusic(){
@@ -648,6 +913,41 @@ function toggleMusic(){
     document.getElementById("musicBtn").textContent = "▶";
   }
 }
+
+// Partículas
+const particlesContainer = document.getElementById('particles');
+const cantidad = 50;
+
+for (let i = 0; i < cantidad; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + 'vw';
+  const size = Math.random() * 3 + 1;
+  p.style.width = size + 'px';
+  p.style.height = size + 'px';
+  const duracion = Math.random() * 22 + 18;
+  p.style.animation = `floatUp ${duracion}s linear infinite`;
+  p.style.animationDelay = Math.random() * -duracion + 's';
+  particlesContainer.appendChild(p);
+}
+
+// Reveal on scroll
+const sections = document.querySelectorAll('.hero, #countdown, .ubicacion-section, .itinerario-section, .dresscode-section, .confirmacion-section');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.15
+});
+
+sections.forEach(section => {
+  observer.observe(section);
+});
 </script>
 
 </body>
