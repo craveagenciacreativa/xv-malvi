@@ -40,6 +40,13 @@ body{
 
 /* ===== TITULO ===== */
 
+.titulo-principal p{
+  font-size:3rem;
+  letter-spacing:6px;
+  font-family:'Italiana', serif;
+  text-shadow:0 0 10px rgba(255,255,255,0.6);
+}
+
 .titulo-principal h1{
   font-family:'Ephesis', cursive;
   font-size:8rem;
@@ -65,33 +72,9 @@ body{
   filter: drop-shadow(0 0 25px rgba(255,215,0,0.8));
 }
 
-/* ===== CAJAS GENERALES ===== */
+/* ================= CAJAS PREMIUM ================= */
 
-.fecha-box,
-.hora-box,
-.count-box{
-  width:150px;
-  height:150px;
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:20px;
-  background:rgba(0, 0, 0, 0.123);
-  border:2px solid gold;
-
-  box-shadow:
-    0 0 20px rgb(238, 168, 255),
-    inset 0 0 15px rgb(255, 65, 239);
-
-  transition:0.3s ease;
-}
-
-.count-box{
-  flex-shrink:0; /* evita que flexbox cambie su tamaño */
-}
 
 .fecha-box:hover,
 .hora-box:hover,
@@ -99,7 +82,89 @@ body{
   transform:scale(1.05);
 }
 
-/* ===== TIPOGRAFÍA NÚMEROS ===== */
+/* ===== BORDE ANIMADO ===== */
+
+.fecha-box,
+.hora-box,
+.count-box{
+  position:relative;
+  width:190px;
+  height:190px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border-radius:22px;
+
+  border:1.5px solid rgba(255,255,255,0.8);
+
+  box-shadow:
+    0 0 15px rgba(255,255,255,0.25),
+    inset 0 0 10px rgba(255,255,255,0.08);
+
+  overflow:hidden;
+  transition:0.3s ease;
+}
+
+/* Capa GLASS separada */
+.fecha-box::before,
+.hora-box::before,
+.count-box::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  z-index:0;
+}
+
+/* Aseguramos que el contenido quede arriba */
+.fecha-box > *,
+.hora-box > *,
+.count-box > *{
+  position:relative;
+  z-index:2;
+}
+
+/* LIGHT SWEEP BLANCO */
+.fecha-box::after,
+.hora-box::after,
+.count-box::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-60%;
+  width:50%;
+  height:100%;
+
+  background:linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.9) 50%,
+    transparent 100%
+  );
+
+  transform:skewX(-25deg);
+  animation:lightSweep 1.6s linear infinite;
+
+  pointer-events:none;
+  z-index:1;
+}
+
+@keyframes lightSweep{
+  0%{ left:-60%; }
+  100%{ left:120%; }
+}
+/* ===== TIPOGRAFÍA ===== */
+
+.fecha-box,
+.hora-box{
+  flex-direction:column;
+}
 
 .fecha-box .top,
 .hora-box .top,
@@ -110,27 +175,13 @@ body{
   line-height:1;
 }
 
-/* ===== NÚMEROS COUNTDOWN ESTABLES ===== */
-
 .count-number{
   font-family:'Italiana', serif;
   font-size:3rem;
   line-height:1;
-
-  width:3ch; /* espacio fijo hasta 3 dígitos */
+  width:3ch;
   text-align:center;
-
-  font-variant-numeric: tabular-nums; /* números monoespaciados */
-}
-
-/* ===== TEXTO CONTADOR ===== */
-
-.count-label{
-  font-size:0.7rem;
-  margin-top:6px;
-  letter-spacing:1px;
-  font-family:'Italiana', serif;
-  font-weight:400;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ===== LÍNEA ===== */
@@ -147,14 +198,13 @@ body{
 
 #countdown{
   padding:20px 20px 60px 20px;
-  margin-top:0;
   text-align:center;
 }
 
 #countdown h2{
   font-size:3rem;
   margin-bottom:40px;
-  font-family: 'Italiana', serif; /* nueva tipografía */
+  font-family:'Italiana', serif;
 }
 
 .countdown-container{
@@ -162,6 +212,41 @@ body{
   justify-content:center;
   gap:40px;
   flex-wrap:nowrap;
+}
+
+.count-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.count-label{
+  margin-top:12px;
+  font-size:0.8rem;
+  letter-spacing:2px;
+  font-family:'Italiana', serif;
+}
+
+/* ================= UBICACIÓN ================= */
+
+.ubicacion-section{
+  text-align:center;
+  padding:40px 20px 80px 20px;
+}
+
+.divisor-img{
+  width:280px;
+  max-width:80%;
+  margin-bottom:25px;
+  filter: drop-shadow(0 0 12px rgba(255,215,0,0.6));
+  opacity:0.9;
+}
+
+.ubicacion-titulo{
+  font-family:'Italiana', serif;
+  font-size:3rem;
+  letter-spacing:4px;
+  text-shadow:0 0 15px rgba(255,255,255,0.6);
 }
 
 /* ================= MUSICA ================= */
@@ -190,13 +275,9 @@ body{
 
 @media (max-width:768px){
 
-.hero{
-  padding-top:90px;
-}
+.hero{ padding-top:90px; }
 
-.titulo-principal h1{
-  font-size:6rem;
-}
+.titulo-principal h1{ font-size:6rem; }
 
 .fecha-box .top,
 .fecha-box .bottom,
@@ -205,26 +286,21 @@ body{
   font-size:1.9rem;
 }
 
-.evento-horizontal{
-  gap:15px;
-}
+.evento-horizontal{ gap:15px; }
 
-.candelabro-centro{
-  width:130px;
-}
+.candelabro-centro{ width:130px; }
 
 .fecha-box,
 .hora-box,
 .count-box{
-  width:20vw;     /* ancho proporcional a pantalla */
-  height:24vw;
-  max-width:95px; /* límite para que no crezcan demasiado */
+  width:20vw;
+  height:20vw;
+  max-width:95px;
   max-height:95px;
 }
 
 .count-number{
   font-size:clamp(1.8rem, 6vw, 2.5rem);
-  width:3ch;
 }
 
 .linea{
@@ -232,19 +308,13 @@ body{
   margin:4px 0;
 }
 
-#countdown h2{
-  font-size:3rem;
-  margin-top:20px;
-  font-family:'Italiana', serif;
-  font-weight:400;
-}
+#countdown h2{ font-size:2.2rem; }
 
-.countdown-container{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:nowrap;
-}
+.countdown-container{ gap:10px; }
+
+.ubicacion-titulo{ font-size:2.2rem; }
+
+.divisor-img{ width:200px; }
 
 }
 
@@ -253,65 +323,71 @@ body{
 <body>
 
 <section class="hero">
-
   <div class="titulo-principal">
     <p>MIS XV</p>
     <h1>Malvina</h1>
   </div>
 
   <div class="evento-horizontal">
-
-    <div class="hora-box">
+    <div class="fecha-box">
       <span class="top">21</span>
       <div class="linea"></div>
-      <span class="bottom">00</span>
+      <span class="bottom">03</span>
     </div>
 
     <img src="assets/candelabro.png" alt="candelabro" class="candelabro-centro">
 
-    <div class="fecha-box">
-      <span class="top">27</span>
+    <div class="hora-box">
+      <span class="top">21</span>
       <div class="linea"></div>
-      <span class="bottom">09</span>
+      <span class="bottom">HS</span>
     </div>
-
   </div>
-
 </section>
 
 <section id="countdown">
+  <h2>Faltan solo...</h2>
 
   <div class="countdown-container">
-
-    <div class="count-box">
-      <div class="count-number" id="days">00</div>
+    <div class="count-item">
+      <div class="count-box">
+        <div class="count-number" id="days">00</div>
+      </div>
       <div class="count-label">DÍAS</div>
     </div>
 
-    <div class="count-box">
-      <div class="count-number" id="hours">00</div>
+    <div class="count-item">
+      <div class="count-box">
+        <div class="count-number" id="hours">00</div>
+      </div>
       <div class="count-label">HORAS</div>
     </div>
 
-    <div class="count-box">
-      <div class="count-number" id="minutes">00</div>
+    <div class="count-item">
+      <div class="count-box">
+        <div class="count-number" id="minutes">00</div>
+      </div>
       <div class="count-label">MINUTOS</div>
     </div>
 
-    <div class="count-box">
-      <div class="count-number" id="seconds">00</div>
+    <div class="count-item">
+      <div class="count-box">
+        <div class="count-number" id="seconds">00</div>
+      </div>
       <div class="count-label">SEGUNDOS</div>
     </div>
-
   </div>
+</section>
 
-  <h2>Faltan solo...</h2>
-
+<section class="ubicacion-section">
+  <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
+  <h2 class="ubicacion-titulo">UBICACIÓN</h2>
 </section>
 
 <audio id="music" loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
+
 <button class="music-control" onclick="toggleMusic()">♪</button>
 
 <script>
@@ -345,7 +421,7 @@ const audio = document.getElementById("music");
 
 function toggleMusic(){
   if(audio.paused){
-    audio.play().catch(e=>console.log(e));
+    audio.play().catch(()=>{});
   }else{
     audio.pause();
   }
