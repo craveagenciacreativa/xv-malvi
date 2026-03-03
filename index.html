@@ -8,14 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Italiana&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-
-*{
+* {
   margin:0;
   padding:0;
   box-sizing:border-box;
 }
 
-body{
+body {
   font-family:'Poppins',sans-serif;
   background-image:url("assets/fondo.jpg");
   background-size:cover;
@@ -26,8 +25,7 @@ body{
 }
 
 /* ================= HERO ================= */
-
-.hero{
+.hero {
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
@@ -39,15 +37,14 @@ body{
 }
 
 /* ===== TITULO ===== */
-
-.titulo-principal p{
+.titulo-principal p {
   font-size:3rem;
   letter-spacing:6px;
   font-family:'Italiana', serif;
   text-shadow:0 0 10px rgba(255,255,255,0.6);
 }
 
-.titulo-principal h1{
+.titulo-principal h1 {
   font-family:'Ephesis', cursive;
   font-size:8rem;
   text-shadow:
@@ -56,8 +53,7 @@ body{
 }
 
 /* ===== BLOQUE HORIZONTAL ===== */
-
-.evento-horizontal{
+.evento-horizontal {
   display:flex;
   align-items:center;
   justify-content:center;
@@ -66,27 +62,22 @@ body{
 }
 
 /* ===== CANDELABRO ===== */
-
-.candelabro-centro{
+.candelabro-centro {
   width:200px;
   filter: drop-shadow(0 0 25px rgba(255,215,0,0.8));
 }
 
 /* ================= CAJAS PREMIUM ================= */
-
-
-
 .fecha-box:hover,
 .hora-box:hover,
-.count-box:hover{
+.count-box:hover {
   transform:scale(1.05);
 }
 
 /* ===== BORDE ANIMADO ===== */
-
 .fecha-box,
 .hora-box,
-.count-box{
+.count-box {
   position:relative;
   width:190px;
   height:190px;
@@ -95,13 +86,10 @@ body{
   align-items:center;
   justify-content:center;
   border-radius:22px;
-
   border:1.5px solid rgba(255,255,255,0.8);
-
   box-shadow:
     0 0 15px rgba(255,255,255,0.25),
     inset 0 0 10px rgba(255,255,255,0.08);
-
   overflow:hidden;
   transition:0.3s ease;
 }
@@ -109,23 +97,21 @@ body{
 /* Capa GLASS separada */
 .fecha-box::before,
 .hora-box::before,
-.count-box::before{
+.count-box::before {
   content:"";
   position:absolute;
   inset:0;
   border-radius:22px;
-
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
   z-index:0;
 }
 
 /* Aseguramos que el contenido quede arriba */
 .fecha-box > *,
 .hora-box > *,
-.count-box > *{
+.count-box > * {
   position:relative;
   z-index:2;
 }
@@ -138,48 +124,43 @@ body{
   position: absolute;
   top: 0;
   left: -60%;
-  width: 60%;               /* un poco más ancho para que el sweep sea más notorio */
+  width: 60%;
   height: 100%;
-  
   background: linear-gradient(
     120deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.7) 50%,   /* baja un poco la opacidad */
+    rgba(255, 255, 255, 0.7) 50%,
     transparent 100%
   );
-  
   transform: skewX(-25deg);
-  animation: lightSweep 2.2s linear infinite;   /* un poco más lento para mobile */
-  
+  animation: lightSweep 2.2s linear infinite;
   pointer-events: none;
   z-index: 1;
-  
-  /* Ayuda a Chrome a renderizar mejor el gradiente sobre blur */
-  mix-blend-mode: screen;     /* ← clave: hace que el blanco "ilumine" en vez de oscurecer */
-  will-change: transform;     /* fuerza GPU acceleration */
+  mix-blend-mode: screen;
+  will-change: transform;
 }
 
 @keyframes lightSweep {
   0%   { left: -80%; }
   100% { left: 140%; }
 }
-/* ===== TIPOGRAFÍA ===== */
 
+/* ===== TIPOGRAFÍA ===== */
 .fecha-box,
-.hora-box{
+.hora-box {
   flex-direction:column;
 }
 
 .fecha-box .top,
-.hora-box .top,
 .fecha-box .bottom,
-.hora-box .bottom{
+.hora-box .top,
+.hora-box .bottom {
   font-family:'Italiana', serif;
   font-size:3rem;
   line-height:1;
 }
 
-.count-number{
+.count-number {
   font-family:'Italiana', serif;
   font-size:3rem;
   line-height:1;
@@ -189,8 +170,7 @@ body{
 }
 
 /* ===== LÍNEA ===== */
-
-.linea{
+.linea {
   width:70%;
   height:3px;
   background:gold;
@@ -199,32 +179,31 @@ body{
 }
 
 /* ================= CONTADOR ================= */
-
-#countdown{
+#countdown {
   padding:20px 20px 60px 20px;
   text-align:center;
 }
 
-#countdown h2{
+#countdown h2 {
   font-size:3rem;
   margin-bottom:40px;
   font-family:'Italiana', serif;
 }
 
-.countdown-container{
+.countdown-container {
   display:flex;
   justify-content:center;
   gap:40px;
   flex-wrap:nowrap;
 }
 
-.count-item{
+.count-item {
   display:flex;
   flex-direction:column;
   align-items:center;
 }
 
-.count-label{
+.count-label {
   margin-top:12px;
   font-size:0.8rem;
   letter-spacing:2px;
@@ -232,13 +211,12 @@ body{
 }
 
 /* ================= UBICACIÓN ================= */
-
-.ubicacion-section{
+.ubicacion-section {
   text-align:center;
   padding:40px 20px 80px 20px;
 }
 
-.divisor-img{
+.divisor-img {
   width:280px;
   max-width:80%;
   margin-bottom:25px;
@@ -246,16 +224,57 @@ body{
   opacity:0.9;
 }
 
-.ubicacion-titulo{
+.ubicacion-titulo {
   font-family:'Italiana', serif;
   font-size:3rem;
   letter-spacing:4px;
   text-shadow:0 0 15px rgba(255,255,255,0.6);
 }
 
-/* ================= MUSICA ================= */
+.ubicacion-section .direccion {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  margin: 25px auto 10px;
+  max-width: 90%;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
 
-.music-control{
+.ubicacion-section .direccion strong {
+  font-weight: 600;
+  color: gold;
+}
+
+.ubicacion-section .direccion .detalle {
+  font-size: 1rem;          /* más pequeño que el strong */
+  opacity: 0.9;
+  margin-top: 8px;
+  display: block;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding-bottom: 56.25%;   /* proporción ~16:9 para mapas */
+  height: 0;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(186,85,211,0.4);
+}
+
+.map-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ================= MUSICA ================= */
+.music-control {
   position:fixed;
   bottom:30px;
   right:30px;
@@ -271,57 +290,38 @@ body{
   z-index:999;
 }
 
-.music-control:hover{
+.music-control:hover {
   background:#7b1fa2;
 }
 
 /* ================= RESPONSIVE ================= */
-
-@media (max-width:768px){
-
-.hero{ padding-top:90px; }
-
-.titulo-principal h1{ font-size:6rem; }
-
-.fecha-box .top,
-.fecha-box .bottom,
-.hora-box .top,
-.hora-box .bottom{
-  font-size:1.9rem;
+@media (max-width:768px) {
+  .hero { padding-top:90px; }
+  .titulo-principal h1 { font-size:6rem; }
+  .fecha-box .top,
+  .fecha-box .bottom,
+  .hora-box .top,
+  .hora-box .bottom { font-size:1.9rem; }
+  .evento-horizontal { gap:15px; }
+  .candelabro-centro { width:130px; }
+  .fecha-box,
+  .hora-box,
+  .count-box {
+    width:20vw;
+    height:20vw;
+    max-width:95px;
+    max-height:95px;
+  }
+  .count-number { font-size:clamp(1.8rem, 6vw, 2.5rem); }
+  .linea { height:2px; margin:4px 0; }
+  #countdown h2 { font-size:2.2rem; }
+  .countdown-container { gap:10px; }
+  .ubicacion-titulo { font-size:2.2rem; }
+  .divisor-img { width:200px; }
+  .ubicacion-section .direccion { font-size: 1.2rem; }
+  .ubicacion-section .direccion .detalle { font-size: 0.95rem; }
+  .map-wrapper { width: 95%; padding-bottom: 75%; } /* más alto en mobile si querés */
 }
-
-.evento-horizontal{ gap:15px; }
-
-.candelabro-centro{ width:130px; }
-
-.fecha-box,
-.hora-box,
-.count-box{
-  width:20vw;
-  height:20vw;
-  max-width:95px;
-  max-height:95px;
-}
-
-.count-number{
-  font-size:clamp(1.8rem, 6vw, 2.5rem);
-}
-
-.linea{
-  height:2px;
-  margin:4px 0;
-}
-
-#countdown h2{ font-size:2.2rem; }
-
-.countdown-container{ gap:10px; }
-
-.ubicacion-titulo{ font-size:2.2rem; }
-
-.divisor-img{ width:200px; }
-
-}
-
 </style>
 </head>
 <body>
@@ -385,17 +385,23 @@ body{
 
 <section class="ubicacion-section">
   <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
-  <h2 class="ubicacion-titulo">UBICACIÓN</h2>
+  <h2 class="ubicacion-titulo">Ubicación</h2>
+  <p class="direccion">
+    <strong>Salón UPCN</strong>
+    <span class="detalle">General Artigas y Los Lapachos,<br>Candelaria, Misiones</span>
+  </p>
+  <div class="map-wrapper">
+   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d884.8875442644469!2d-55.74033298950951!3d-27.483260116431328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9457cf4336f4da2f%3A0x6433ed96a3d570da!2sClub%20UPCN!5e0!3m2!1ses!2sar!4v1772513203305!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
 </section>
 
 <audio id="music" loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
-<button class="music-control" onclick="toggleMusic()">♪</button>
+<button class="music-control" id="musicBtn" onclick="toggleMusic()">▶</button>
 
 <script>
-
 const fechaEvento = new Date("2026-09-27T21:00:00-03:00").getTime();
 
 function actualizarContador(){
@@ -426,11 +432,12 @@ const audio = document.getElementById("music");
 function toggleMusic(){
   if(audio.paused){
     audio.play().catch(()=>{});
-  }else{
+    document.getElementById("musicBtn").textContent = "‖";
+  } else {
     audio.pause();
+    document.getElementById("musicBtn").textContent = "▶";
   }
 }
-
 </script>
 
 </body>
