@@ -133,31 +133,35 @@ body{
 /* LIGHT SWEEP BLANCO */
 .fecha-box::after,
 .hora-box::after,
-.count-box::after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-60%;
-  width:50%;
-  height:100%;
-
-  background:linear-gradient(
+.count-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 60%;               /* un poco más ancho para que el sweep sea más notorio */
+  height: 100%;
+  
+  background: linear-gradient(
     120deg,
     transparent 0%,
-    rgba(255,255,255,0.9) 50%,
+    rgba(255, 255, 255, 0.7) 50%,   /* baja un poco la opacidad */
     transparent 100%
   );
-
-  transform:skewX(-25deg);
-  animation:lightSweep 1.6s linear infinite;
-
-  pointer-events:none;
-  z-index:1;
+  
+  transform: skewX(-25deg);
+  animation: lightSweep 2.2s linear infinite;   /* un poco más lento para mobile */
+  
+  pointer-events: none;
+  z-index: 1;
+  
+  /* Ayuda a Chrome a renderizar mejor el gradiente sobre blur */
+  mix-blend-mode: screen;     /* ← clave: hace que el blanco "ilumine" en vez de oscurecer */
+  will-change: transform;     /* fuerza GPU acceleration */
 }
 
-@keyframes lightSweep{
-  0%{ left:-60%; }
-  100%{ left:120%; }
+@keyframes lightSweep {
+  0%   { left: -80%; }
+  100% { left: 140%; }
 }
 /* ===== TIPOGRAFÍA ===== */
 
