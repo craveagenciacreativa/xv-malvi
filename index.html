@@ -70,21 +70,16 @@ body {
 /* ================= CAJAS PREMIUM ================= */
 .fecha-box:hover,
 .hora-box:hover,
-.count-box:hover {
+.count-box:hover,
+.ubicacion-box:hover {
   transform:scale(1.05);
 }
 
-/* ===== BORDE ANIMADO ===== */
 .fecha-box,
 .hora-box,
-.count-box {
+.count-box,
+.ubicacion-box {
   position:relative;
-  width:190px;
-  height:190px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
   border-radius:22px;
   border:1.5px solid rgba(255,255,255,0.8);
   box-shadow:
@@ -92,12 +87,38 @@ body {
     inset 0 0 10px rgba(255,255,255,0.08);
   overflow:hidden;
   transition:0.3s ease;
+  text-align:center;
 }
 
-/* Capa GLASS separada */
+.fecha-box,
+.hora-box,
+.count-box {
+  width:190px;
+  height:190px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.ubicacion-box {
+  width: 340px;
+  height: auto;
+  min-height: 190px;
+  padding: 25px 20px;
+  margin: 0 auto 30px auto;
+  display: block;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: 12px;
+}
+
+/* Glass y sweep */
 .fecha-box::before,
 .hora-box::before,
-.count-box::before {
+.count-box::before,
+.ubicacion-box::before {
   content:"";
   position:absolute;
   inset:0;
@@ -108,18 +129,18 @@ body {
   z-index:0;
 }
 
-/* Aseguramos que el contenido quede arriba */
 .fecha-box > *,
 .hora-box > *,
-.count-box > * {
+.count-box > *,
+.ubicacion-box > * {
   position:relative;
   z-index:2;
 }
 
-/* LIGHT SWEEP BLANCO */
 .fecha-box::after,
 .hora-box::after,
-.count-box::after {
+.count-box::after,
+.ubicacion-box::after {
   content: "";
   position: absolute;
   top: 0;
@@ -145,12 +166,7 @@ body {
   100% { left: 140%; }
 }
 
-/* ===== TIPOGRAFÍA ===== */
-.fecha-box,
-.hora-box {
-  flex-direction:column;
-}
-
+/* Tipografía fecha/hora/countdown */
 .fecha-box .top,
 .fecha-box .bottom,
 .hora-box .top,
@@ -169,7 +185,6 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* ===== LÍNEA ===== */
 .linea {
   width:70%;
   height:3px;
@@ -178,15 +193,32 @@ body {
   box-shadow:0 0 12px gold;
 }
 
+/* Ubicación box */
+.ubicacion-box .salon {
+  font-family: 'Italiana', serif;
+  font-size: 2.5rem;
+  color: gold;
+  text-shadow: 0 0 10px gold;
+  margin: 0;
+}
+
+.ubicacion-box .direccion {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  opacity: 0.95;
+  margin: 0;
+}
+
 /* ================= CONTADOR ================= */
 #countdown {
-  padding:20px 20px 60px 20px;
+  padding:20px 20px 15px 20px;   /* muy poco espacio abajo para pegar al divisor */
   text-align:center;
 }
 
 #countdown h2 {
   font-size:3rem;
-  margin-bottom:40px;
+  margin-bottom:30px;
   font-family:'Italiana', serif;
 }
 
@@ -213,15 +245,17 @@ body {
 /* ================= UBICACIÓN ================= */
 .ubicacion-section {
   text-align:center;
-  padding:40px 20px 80px 20px;
+  padding: 15px 20px 50px 20px;   /* poco espacio arriba */
 }
 
 .divisor-img {
-  width:280px;
-  max-width:80%;
-  margin-bottom:25px;
+  width: 100%;                    /* ocupa todo el ancho disponible */
+  max-width: none;                /* sin límite superior */
+  height: auto;
+  margin: 0 auto 5px auto;        /* casi pegado arriba y abajo */
+  display: block;
   filter: drop-shadow(0 0 12px rgba(255,215,0,0.6));
-  opacity:0.9;
+  opacity: 0.9;
 }
 
 .ubicacion-titulo {
@@ -229,35 +263,15 @@ body {
   font-size:3rem;
   letter-spacing:4px;
   text-shadow:0 0 15px rgba(255,255,255,0.6);
-}
-
-.ubicacion-section .direccion {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.4rem;
-  line-height: 1.5;
-  margin: 25px auto 10px;
-  max-width: 90%;
-  text-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-.ubicacion-section .direccion strong {
-  font-weight: 600;
-  color: gold;
-}
-
-.ubicacion-section .direccion .detalle {
-  font-size: 1rem;          /* más pequeño que el strong */
-  opacity: 0.9;
-  margin-top: 8px;
-  display: block;
+  margin-bottom: 12px;            /* muy poco espacio debajo del título */
 }
 
 .map-wrapper {
   position: relative;
   width: 90%;
   max-width: 800px;
-  margin: 40px auto;
-  padding-bottom: 56.25%;   /* proporción ~16:9 para mapas */
+  margin: 0 auto;
+  padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
   border-radius: 15px;
@@ -314,13 +328,30 @@ body {
   }
   .count-number { font-size:clamp(1.8rem, 6vw, 2.5rem); }
   .linea { height:2px; margin:4px 0; }
-  #countdown h2 { font-size:2.2rem; }
+  #countdown {
+    padding:15px 15px 10px 15px;
+  }
+  #countdown h2 { font-size:2.2rem; margin-bottom:20px; }
   .countdown-container { gap:10px; }
-  .ubicacion-titulo { font-size:2.2rem; }
-  .divisor-img { width:200px; }
-  .ubicacion-section .direccion { font-size: 1.2rem; }
-  .ubicacion-section .direccion .detalle { font-size: 0.95rem; }
-  .map-wrapper { width: 95%; padding-bottom: 75%; } /* más alto en mobile si querés */
+  .ubicacion-section {
+    padding: 10px 10px 40px 10px;
+  }
+  .divisor-img { 
+    width: 100vw; 
+    margin: 0 auto 5px auto;
+  }
+  .ubicacion-titulo { 
+    font-size:2.2rem; 
+    margin-bottom: 10px; 
+  }
+  .ubicacion-box {
+    width: 92%;
+    padding: 18px 12px;
+    min-height: 140px;
+  }
+  .ubicacion-box .salon { font-size: 2.1rem; }
+  .ubicacion-box .direccion { font-size: 0.95rem; }
+  .map-wrapper { width: 96%; padding-bottom: 70%; }
 }
 </style>
 </head>
@@ -386,12 +417,12 @@ body {
 <section class="ubicacion-section">
   <img src="assets/divisor.png" alt="divisor decorativo" class="divisor-img">
   <h2 class="ubicacion-titulo">Ubicación</h2>
-  <p class="direccion">
-    <strong>Salón UPCN</strong>
-    <span class="detalle">General Artigas y Los Lapachos,<br>Candelaria, Misiones</span>
-  </p>
+  <div class="ubicacion-box">
+    <div class="salon">Salón UPCN</div>
+    <div class="direccion">General Artigas y Los Lapachos,<br>Candelaria, Misiones</div>
+  </div>
   <div class="map-wrapper">
-   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d884.8875442644469!2d-55.74033298950951!3d-27.483260116431328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9457cf4336f4da2f%3A0x6433ed96a3d570da!2sClub%20UPCN!5e0!3m2!1ses!2sar!4v1772513203305!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1104.9572330072972!2d-55.74033298950951!3d-27.483260116431328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9457cf4336f4da2f%3A0x6433ed96a3d570da!2sClub%20UPCN!5e1!3m2!1ses!2sar!4v1772512945819!5m2!1ses!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </section>
 
