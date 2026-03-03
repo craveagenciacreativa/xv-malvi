@@ -212,7 +212,7 @@ body {
 
 /* ================= CONTADOR ================= */
 #countdown {
-  padding:20px 20px 15px 20px;   /* muy poco espacio abajo para pegar al divisor */
+  padding:20px 20px 15px 20px;
   text-align:center;
 }
 
@@ -245,14 +245,14 @@ body {
 /* ================= UBICACIÓN ================= */
 .ubicacion-section {
   text-align:center;
-  padding: 15px 20px 50px 20px;   /* poco espacio arriba */
+  padding: 15px 20px 50px 20px;
 }
 
 .divisor-img {
-  width: 100%;                    /* ocupa todo el ancho disponible */
-  max-width: none;                /* sin límite superior */
+  width: 100%;
+  max-width: none;
   height: auto;
-  margin: 0 auto 5px auto;        /* casi pegado arriba y abajo */
+  margin: 0 auto 5px auto;
   display: block;
   filter: drop-shadow(0 0 12px rgba(255,215,0,0.6));
   opacity: 0.9;
@@ -263,7 +263,7 @@ body {
   font-size:3rem;
   letter-spacing:4px;
   text-shadow:0 0 15px rgba(255,255,255,0.6);
-  margin-bottom: 12px;            /* muy poco espacio debajo del título */
+  margin-bottom: 12px;
 }
 
 .map-wrapper {
@@ -352,6 +352,11 @@ body {
   .ubicacion-box .salon { font-size: 2.1rem; }
   .ubicacion-box .direccion { font-size: 0.95rem; }
   .map-wrapper { width: 96%; padding-bottom: 70%; }
+
+  /* Elimina el salto del fondo en móviles */
+  body {
+    background-attachment: scroll !important;
+  }
 }
 </style>
 </head>
